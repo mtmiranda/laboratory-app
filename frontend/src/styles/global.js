@@ -1,17 +1,15 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
 
 :root {
  --background: #F0F2F5;
- --background-header: #EE8F79;
- --red: #E52E4D;
- --blue: #5429CC;
- --green: #33CC95;
- --blue-light: #6933FF;
+ --red-100: #EE8F79;
  --text-title: #363F5F;
  --text-body: #969CB3;
  --shape: #FFFFFF;
+ --red: #ED1C2A;
+ --white: #FFFFFF;
 }
 
 *{
@@ -57,4 +55,4 @@ button{
   cursor: not-allowed;
 }
 
-`;
+`
