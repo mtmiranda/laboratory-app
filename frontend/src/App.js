@@ -1,18 +1,26 @@
-import Header from "./components/Header";
+import React, { useState } from 'react'
 
-import Table from "./components/Table";
+import Header from './components/Header'
 
-import { GlobalStyle } from "./styles/global";
-import "./styles/global";
+import TableComponent from './components/TableComponent'
+
+import { GlobalStyle } from './styles/global'
+import './styles/global'
 
 function App() {
-  return (
-    <>
-      <GlobalStyle />
-      <Header />
-      <Table />
-    </>
-  );
+    const [tableRegistries, setTableRegistries] = useState(false)
+
+    const handleOpenNewTableRegistry = () => {
+        setTableRegistries(true)
+    }
+
+    return (
+        <>
+            <GlobalStyle />
+            <Header onOpenNewTableRegistry={handleOpenNewTableRegistry} />
+            <TableComponent isOpen={tableRegistries} />
+        </>
+    )
 }
 
-export default App;
+export default App
