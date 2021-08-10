@@ -17,7 +17,7 @@ Projeto de um sistema de laboratório médico para consulta de registros cadastr
 
 ## :movie_camera: Demonstração 
 
-![App preview](public/todo-preview.gif)
+![App preview](frontend/public/preview.gif)
 
 ## :computer: **Start** 
 
