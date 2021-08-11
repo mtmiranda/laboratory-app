@@ -22,38 +22,38 @@ connection.connect(function (err) {
 });
 
 sql = `CREATE TABLE if not exists cp_cdtb_unidade_unid(
-      ID_UNID_CD_UNIDADE INT,
-      UNID_NO_UNIDADE    VARCHAR(30)
-      
+  ID_UNID_CD_UNIDADE INT,
+  UNID_NO_UNIDADE    VARCHAR(30)
       )`;
-
-sql = `CREATE TABLE if not exists fi_cdtb_ficha_fich(
-          ID_UNID_CD_UNIDADE_FICHA INT,
-          ID_FICH_NR_FICHA         INT,
-          ID_CLIE_NR_CLIENTE       INT,
-          FICH_DH_ABERTURA         DATETIME
-      )`;
-
-sql = `CREATE TABLE if not exists  pe_cdtb_cliente_clie(
-      ID_CLIE_NR_CLIENTE  INT,
-      ID_PEFI_CD_PESSOA_FISICA INT
-  )`;
 
 sql = `CREATE TABLE if not exists pe_cdtb_pessoa_fisica_pefi(
-      ID_PEFI_CD_PESSOA_FISICA INT,
-      PEFI_NR_CPF	             VARCHAR(11),
-      PEFI_NR_RG               VARCHAR(20),
-      PEFI_NO_NOME             VARCHAR(50),
-      PEFI_NO_SOBRENOME        VARCHAR(50),
-      PEFI_DH_NASCIMENTO       DATETIME
-  )`;
+  ID_PEFI_CD_PESSOA_FISICA INT,
+  PEFI_NR_CPF	             VARCHAR(11),
+  PEFI_NR_RG               VARCHAR(20),
+  PEFI_NO_NOME             VARCHAR(50),
+  PEFI_NO_SOBRENOME        VARCHAR(50),
+  PEFI_DH_NASCIMENTO       VARCHAR(50)
+        )`;
 
 sql = `CREATE TABLE  if not exists fi_cdtb_item_sub_item_ficha_item(
+  ID_UNID_CD_UNIDADE_FICHA INT,
+  ID_FICH_NR_FICHA         INT,
+  ID_ITEM_NR_ITEM          INT,
+  ID_ITEM_NR_SUBITEM       INT,
+  PROD_SL_EXAME            VARCHAR(20)
+)`;
+
+sql = `CREATE TABLE if not exists  pe_cdtb_cliente_clie(
+  ID_CLIE_NR_CLIENTE  INT,
+  ID_PEFI_CD_PESSOA_FISICA INT
+
+          )`;
+
+sql = `CREATE TABLE if not exists fi_cdtb_ficha_fich(
       ID_UNID_CD_UNIDADE_FICHA INT,
       ID_FICH_NR_FICHA         INT,
-      ID_ITEM_NR_ITEM          INT,
-      ID_ITEM_NR_SUBITEM       INT,
-      PROD_SL_EXAME            VARCHAR(20)
+      ID_CLIE_NR_CLIENTE       INT,
+      FICH_DH_ABERTURA         VARCHAR(50)
   )`;
 
 sql = `INSERT INTO pe_cdtb_pessoa_fisica_pefi VALUES( 1, '13213213250', '1245787478', 'CLIENTE', 'FLEURY 01', '1977-03-18' ),
@@ -95,14 +95,18 @@ sql = `INSERT INTO fi_cdtb_item_sub_item_ficha_item VALUES( 500, 1234562, 1, 0, 
     ( 100, 1547896, 1, 0, 'CLAMDNA' ),
     ( 100, 1547896, 1, 0, 'K' )`;
 
-// sql = `
-//     CREATE PROCEDURE filterClients(IN done BOOLEAN)
-//     BEGIN
-//     SELECT * FROM cp_cdtb_unidade_unid
-//     INNER JOIN fi_cdtb_ficha_fich
-//     INNER JOIN fi_cdtb_item_sub_item_ficha_item INNER JOIN pe_cdtb_cliente_clie
-//     INNER JOIN pe_cdtb_pessoa_fisica_pefi;
-//     END`;
+sql = `
+    CREATE PROCEDURE filterClients(IN done BOOLEAN)
+    BEGIN
+    SELECT cp_cdtb_unidade_unid.UNID_NO_UNIDADE, cp_cdtb_unidade_unid.ID_UNID_CD_UNIDADE, fi_cdtb_ficha_fich.ID_FICH_NR_FICHA,
+    fi_cdtb_ficha_fich.FICH_DH_ABERTURA, pe_cdtb_pessoa_fisica_pefi.PEFI_NO_SOBRENOME,
+    pe_cdtb_pessoa_fisica_pefi.PEFI_DH_NASCIMENTO,
+    ID_ITEM_NR_ITEM, ID_ITEM_NR_SUBITEM, PROD_SL_EXAME
+    FROM cp_cdtb_unidade_unid JOIN fi_cdtb_ficha_fich
+    JOIN fi_cdtb_item_sub_item_ficha_item ON fi_cdtb_item_sub_item_ficha_item.ID_UNID_CD_UNIDADE_FICHA = cp_cdtb_unidade_unid.ID_UNID_CD_UNIDADE JOIN pe_cdtb_pessoa_fisica_pefi
+    ORDER BY ID_FICH_NR_FICHA ASC, ID_ITEM_NR_ITEM ASC, fi_cdtb_ficha_fich.ID_UNID_CD_UNIDADE_FICHA ASC
+    LIMIT 50;
+    END`;
 
 connection.query(sql, function (err, results, fields) {
   if (err) {
@@ -122,18 +126,13 @@ app.get('/api/get', (req, res) => {
       console.log(err.message);
     }
   });
-
-  // connection.end(function (err) {
-  //   if (err) {
-  //     return console.log(err.message);
-  //   }
-  // });
 });
 
 app.listen(3001, () => {
   console.log('running on port 3001');
 });
 
+//HEROKU CONFIG
 // app.listen(process.env.PORT || PORT, () => {
 //   console.log('running on port ${PORT}');
 // });
