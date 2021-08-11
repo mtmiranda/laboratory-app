@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.main`
     .react-bootstrap-table {
-        font-size: 10px;
+        font-size: 1rem;
     }
 `
 
@@ -24,6 +24,17 @@ export const Content = styled.div`
         flex-direction: column;
         align-content: center;
         align-items: center;
+    }
+
+    .react-bootstrap-table {
+        @media (max-width: 1360px) {
+            font-size: 10px;
+        }
+    }
+
+    .header-word-wrap {
+        word-wrap: break-word;
+        vertical-align: initial;
     }
 
     .home-wrapper {
