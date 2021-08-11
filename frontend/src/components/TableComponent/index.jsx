@@ -28,6 +28,10 @@ function TableComponent({ isOpen }) {
         { dataField: 'PROD_SL_EXAME', text: 'Exame' },
     ]
 
+    const rowStyle = (row, rowIndex) => {
+        return { overflowWrap: 'break-word' }
+    }
+
     useEffect(() => {
         axios
             .get('http://localhost:3001/api/get')
@@ -48,6 +52,11 @@ function TableComponent({ isOpen }) {
                     <Content>
                         {loading ? (
                             <BootstrapTable
+                                hover={true}
+                                condensed={true}
+                                rowStyle={rowStyle}
+                                wrapperClasses="table-responsive"
+                                headerWrapperClasses="table-responsive header-word-wrap"
                                 keyField="name"
                                 data={dataQuery}
                                 columns={columns}
@@ -56,49 +65,6 @@ function TableComponent({ isOpen }) {
                         ) : (
                             <ReactBootstrap.Spinner animation="border" />
                         )}
-
-                        {/* <Table responsive>
-                        <thead>
-                            <tr>
-                                <th>Nome_unidade</th>
-                                <th>Cod_unidade</th>
-                                <th>Numero_ficha</th>
-                                <th>Data_ficha</th>
-                                <th>Nome_completo</th>
-                                <th>Dt_nascimento</th>
-                                <th>Numero_Item</th>
-                                <th>Numero_Subitem</th>
-                                <th>Exame</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {dataQuery.map((data) => (
-                                <tr>
-                                    <td>{data.UNID_NO_UNIDADE}</td>
-                                    <td>{data.ID_UNID_CD_UNIDADE}</td>
-                                    <td>{data.ID_FICH_NR_FICHA}</td>
-                                    <td>
-                                        {new Intl.DateTimeFormat(
-                                            'pt-BR'
-                                        ).format(
-                                            new Date(data.FICH_DH_ABERTURA)
-                                        )}
-                                    </td>
-                                    <td>{data.PEFI_NO_SOBRENOME}</td>
-                                    <td>
-                                        {new Intl.DateTimeFormat(
-                                            'pt-BR'
-                                        ).format(
-                                            new Date(data.PEFI_DH_NASCIMENTO)
-                                        )}
-                                    </td>
-                                    <td>{data.ID_ITEM_NR_ITEM}</td>
-                                    <td>{data.ID_ITEM_NR_SUBITEM}</td>
-                                    <td>{data.PROD_SL_EXAME}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table> */}
                     </Content>
                 </TableWrapper>
             ) : (
