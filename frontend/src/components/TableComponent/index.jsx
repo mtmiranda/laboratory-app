@@ -71,8 +71,8 @@ function TableComponent({ isOpen }) {
                 <Content>
                     <div className="home-wrapper">
                         <h4>
-                            Seja bem vindo ao sistema de registros do
-                            <span> Grupo Fleury</span>
+                            Seja bem vindo ao sistema de registros da clínica
+                            <span> HelthyHeart</span>
                         </h4>
 
                         <p>
