@@ -7,10 +7,24 @@ export const HeaderWrapper = styled.div`
 export const Content = styled.div`
     max-width: 1120px;
     margin: 0 auto;
-    padding: 2rem 1rem 5rem;
+    padding: 2rem 1rem 3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .logo-wrapper {
+        display: flex;
+        align-items: center;
+        width: 200px;
+        justify-content: space-around;
+
+        & span {
+            color: var(--red);
+            font-weight: bold;
+            filter: opacity(0.8);
+            font-size: 1.2rem;
+        }
+    }
 
     .registries-btn {
         font-size: 1rem;

@@ -8,7 +8,10 @@ function Header({ onOpenNewTableRegistry }) {
         <HeaderWrapper>
             <header>
                 <Content>
-                    <img src={logo} alt="Logo laboratorio" />
+                    <div className="logo-wrapper">
+                        <img src={logo} alt="Logo laboratorio" />
+                        <span> HelthyHeart</span>
+                    </div>
                     <button
                         onClick={onOpenNewTableRegistry}
                         className="registries-btn"
